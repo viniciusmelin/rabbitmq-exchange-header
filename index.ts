@@ -17,14 +17,14 @@ async function main() {
   await producer.sendMessage("teste", {
     type: "payment",
     status: "paid",
-    origin: "cetrus",
+    origin: "medix",
   });
 
   // case posmed
   await producer.sendMessage("teste", {
     type: "order",
     status: "paid",
-    origin: "cetrus",
+    origin: "medix",
   });
 }
 

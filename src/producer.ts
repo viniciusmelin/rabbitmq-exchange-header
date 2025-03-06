@@ -3,23 +3,23 @@ import amqp from "amqplib";
 import {
   EXCHANGE,
   HeaderProperties,
-  QUEUE_ACADEMIC,
+  QUEUE_HEALTHPLUS,
   QUEUE_ORDER_GENERIC,
-  QUEUE_POSMED,
+  QUEUE_MEDIX,
   ROUTING_KEY,
 } from "./constants";
 
-const BINDING_HEADERS_ACADEMIC: Partial<HeaderProperties> = {
+const BINDING_HEADERS_MEDIX: Partial<HeaderProperties> = {
   type: "payment", // Tipo de evento
   status: "paid", // Status do baseado no type
-  origin: "cetrus", // Origem do pedido
+  origin: "medix", // Origem do pedido
   "x-match": "all",
 };
 
-const BINDING_HEADERS_POSMED: Partial<HeaderProperties> = {
+const BINDING_HEADERS_HEALTHPLUS: Partial<HeaderProperties> = {
   type: "order", // Tipo de evento
   status: "paid", // Status do baseado no type
-  origin: "cetrus", // Origem do pedido
+  origin: "medix", // Origem do pedido
   "x-match": "all", // Define que todos os cabeçalhos devem ser iguais
 };
 
@@ -46,22 +46,22 @@ export class Producer {
 
   private async createQueues(): Promise<void> {
     // Criar filas
-    await this.channel.assertQueue(QUEUE_ACADEMIC, { durable: false });
-    await this.channel.assertQueue(QUEUE_POSMED, { durable: false });
+    await this.channel.assertQueue(QUEUE_HEALTHPLUS, { durable: false });
+    await this.channel.assertQueue(QUEUE_MEDIX, { durable: false });
     await this.channel.assertQueue(QUEUE_ORDER_GENERIC, { durable: false });
 
     // Vincular as filas com filtros de cabeçalhos
     await this.channel.bindQueue(
-      QUEUE_ACADEMIC,
+      QUEUE_MEDIX,
       EXCHANGE,
       "",
-      BINDING_HEADERS_ACADEMIC
+      BINDING_HEADERS_MEDIX
     );
     await this.channel.bindQueue(
-      QUEUE_POSMED,
+      QUEUE_HEALTHPLUS,
       EXCHANGE,
       "",
-      BINDING_HEADERS_POSMED
+      BINDING_HEADERS_HEALTHPLUS
     );
     await this.channel.bindQueue(
       QUEUE_ORDER_GENERIC,

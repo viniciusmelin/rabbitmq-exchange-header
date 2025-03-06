@@ -18,10 +18,15 @@ Ao vincular uma fila ao exchange, definimos a regra de correspondência:
 Exemplo:
 
 ```json
-{ "type": "payment", "status": "paid", "origin": "cetrus", "x-match": "all" }
+{
+  "type": "payment",
+  "status": "paid",
+  "origin": "healthplus",
+  "x-match": "all"
+}
 ```
 
-A fila só receberá mensagens que contenham **type = 'payment'**, **status = 'paid'** e **origin = 'cetrus'**.
+A fila só receberá mensagens que contenham **type = 'payment'**, **status = 'paid'** e **origin = 'healthplus'**.
 
 ---
 
@@ -54,14 +59,14 @@ npm run dev
 
 ### **1️⃣ Consumer**
 
-- Cria um `Headers Exchange` chamado `headers_logs`.
-- Declara filas (`queue_academic`, `queue_posmed`, `queue_order_generic`).
+- Cria um `Headers Exchange` chamado `payments_events`.
+- Declara filas (`queue_healthplus`, `queue_medix`, `queue_order_generic`).
 - Associa as filas ao exchange com filtros baseados em **headers**.
 - Escuta mensagens e processa conforme a fila.
 
 ### **2️⃣ Producer**
 
-- Conecta ao exchange `headers_logs`.
+- Conecta ao exchange `payments_events`.
 - Publica mensagens com diferentes cabeçalhos para testar o roteamento.
 
 ---
@@ -76,7 +81,7 @@ npm run dev
 await producer.sendMessage("Pagamento confirmado!", {
   type: "payment",
   status: "paid",
-  origin: "cetrus",
+  origin: "medix",
 });
 await producer.sendMessage("Novo pedido recebido!", {
   type: "order",
