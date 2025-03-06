@@ -91,8 +91,8 @@ await producer.sendMessage("Novo pedido recebido!", {
 
 🎯 **Resultado esperado:**
 
-- A mensagem "Pagamento confirmado!" será entregue à `queue_academic`.
-- A mensagem "Novo pedido recebido!" será entregue à `queue_posmed` e `queue_order_generic`.
+- A mensagem "Pagamento confirmado!" será entregue à `queue_medix`.
+- A mensagem "Novo pedido recebido!" será entregue à `queue_healthplus` e `queue_order_generic`.
 
 ---
 
